@@ -1,0 +1,326 @@
+﻿<UserControl x:Class="AUTOREBAR.UserControlsAUTOREBAR.UserAutoReBarBeamOrColumn"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AUTOREBAR.UserControlsAUTOREBAR"
+             mc:Ignorable="d" 
+             x:Name="ucAutorebar"
+             d:DesignHeight="800" d:DesignWidth="1435"
+             >
+    <UserControl.Resources>
+        <Style x:Key="CustomButton" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Direction="-90" Color="BLue" />
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Black"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="tb_listview">
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Direction="-90" Color="BLue" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ImageBrush x:Key="CloseBtn_MouseOver" ImageSource="C:\Users\bachk\Documents\AUTOREBAR\Assets\closeBtn_MouseOver.png"></ImageBrush>
+        <Style x:Key="Close_btn" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border
+                            x:Name="button"
+                                BorderThickness="0"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="True"></Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        TargetName="button"
+                                        Value="{StaticResource CloseBtn_MouseOver}"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="#FF0B093F">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="80"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock     Text="A U T O R E B A R"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                       Foreground="White"
+                       FontSize="40"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"              
+                       Margin="0,5,0,0">
+            <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="10"
+                                              ShadowDepth="1"
+                                              Direction="-90"
+                                              Color="Blue"></DropShadowEffect>
+            </TextBlock.Effect>
+        </TextBlock>
+        <Button     Width="50"
+                    Grid.Column="1"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    Height="50"
+                    Margin="20"
+                    BorderBrush="Transparent"
+                    Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding ElementName=ucAutorebar}"
+                    Style="{StaticResource Close_btn}">
+            <Button.Background>
+                <ImageBrush ImageSource="C:\Users\bachk\Documents\AUTOREBAR\Assets\closeBtn_default.png"></ImageBrush>
+            </Button.Background>
+        </Button>
+       
+        <Border Margin="500,100,100,100"
+                 Grid.Column="0"
+                Grid.ColumnSpan="2"
+                CornerRadius="20"
+                BorderThickness="0"
+                BorderBrush="Transparent"
+                Background="#FF123C91"
+                Opacity="0.4"></Border>
+        <ListView
+                    x:Name="LsvBeamSection"
+                    Margin="497,100,95,100"
+                Grid.Column="0"
+            Background="Transparent"
+                Grid.ColumnSpan="2"
+            BorderBrush="Transparent"
+            BorderThickness="0"
+            ItemsSource="{Binding SectionsBeam}"
+                    >
+            <ListView.View>
+                <GridView>
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="Background" Value="#FF3400FF" />
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Direction="-90" Color="Blue" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Padding" Value="0,5,0,0" />
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+                    <GridViewColumn Header="Frame Name">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding FrameName}" Style="{StaticResource tb_listview}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Section">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Section}" Style="{StaticResource tb_listview}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Width(m)">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Width}" Style="{StaticResource tb_listview}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Height(m)">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Height}" Style="{StaticResource tb_listview}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Top">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Top}" Style="{StaticResource tb_listview}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Bottom">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Bottom}" Style="{StaticResource tb_listview}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Confinement Bar">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Confinementbar}" Style="{StaticResource tb_listview}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Spacing Confinement Bar(mm)">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Spacingconfinementbar}" Style="{StaticResource tb_listview}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="MTop">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Mtop}" Style="{StaticResource tb_listview}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Mu">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding  Mutop}" Style="{StaticResource tb_listview}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="MBottom">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Mbottom}" Style="{StaticResource tb_listview}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Mu">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Mubottom}" Style="{StaticResource tb_listview}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+                
+            </ListView.View>
+        </ListView>
+        <Button Width="200"
+                 Grid.Column="0"
+               Grid.ColumnSpan="2"
+                Height="50"
+                Margin="250,0,500,20"
+                VerticalAlignment="Bottom"
+                Foreground="White"
+                x:Name="Btn_Define"
+                Command="{Binding ImportAutoCad}"
+                >
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#FF343E83"></Setter>
+                    <Setter Property="Cursor" Value="Hand"></Setter>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect BlurRadius="50" ShadowDepth="1" Direction="-90" Color="Blue" />
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FF2030DA"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="{TemplateBinding Width}"
+                                    Height="{TemplateBinding Height}"
+                                    CornerRadius="20"
+                                    Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"></ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+            <Button.Content>
+                <TextBlock Text="IMPORT AUTOCAD" FontSize="15" Style="{StaticResource CustomButton}"></TextBlock>
+            </Button.Content>
+        </Button>
+        <Button Width="200"
+                 Grid.Column="0"
+               Grid.ColumnSpan="2"
+                Height="50"
+                Margin="500,0,250,20"
+                VerticalAlignment="Bottom"
+                Foreground="White"
+                >
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#FF343E83"></Setter>
+                    <Setter Property="Cursor" Value="Hand"></Setter>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect BlurRadius="50" ShadowDepth="1" Direction="-90" Color="Blue" />
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FF2030DA"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="{TemplateBinding Width}"
+                                    Height="{TemplateBinding Height}"
+                                    CornerRadius="20"
+                                    Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"></ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+            <Button.Content>
+                <TextBlock Text="MODIFY" FontSize="15" Style="{StaticResource CustomButton}"></TextBlock>
+            </Button.Content>
+        </Button>
+        <Grid Height="50" VerticalAlignment="Top" x:Name="GridControl"></Grid>
+        <Border Margin="50,100,1000,100"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                CornerRadius="20"
+                BorderThickness="0"
+                BorderBrush="Transparent"
+                Background="Black"
+                Opacity="0.4"></Border>
+    </Grid>
+</UserControl>

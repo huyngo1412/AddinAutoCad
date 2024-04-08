@@ -1,0 +1,282 @@
+﻿<Window x:Class="AUTOREBAR.View.MainWindowsAUTOREBAR"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AUTOREBAR.View"
+        xmlns:Material="clr-namespace:AUTOREBAR.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        Height="800" 
+        Width="1500"
+        Topmost="True"
+        WindowStyle ="None"
+        ResizeMode="NoResize"
+        x:Name="MainWindow"
+        WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" Loaded="Window_Loaded"
+        >
+    <Window.Resources>
+        
+        <ImageBrush x:Key="tb_mouse_over"
+                    ImageSource="C:\Users\bachk\Documents\AUTOREBAR\Assets\tgBtn_MouseOver.png"></ImageBrush>
+        <Style x:Key="font_style" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment"
+                    Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment"
+                    Value="Left"></Setter>
+            <Setter Property="Foreground"
+                    Value="White"></Setter>
+            <Setter Property="FontSize"
+                    Value="20"></Setter>
+
+        </Style>
+        <Style TargetType="Button" x:Key="btn_style">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <!-- Màu nền khi IsEnabled là false -->
+                </Trigger>
+            </Style.Triggers>
+
+        </Style>
+        <Style TargetType="ToolTip" x:Key="tt_style">
+            <Setter Property="Placement" Value="Right"></Setter>
+            <Setter Property="Height" Value="40"></Setter>
+            <Setter Property="Width" Value="130"></Setter>
+            <Setter Property="Margin" Value="20,0,0,0"></Setter>
+            <Setter Property="Background" Value="#2E333A"></Setter>
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+            <Setter Property="FontSize" Value="16"></Setter>
+            <Setter Property="PlacementRectangle" Value="60,0,0,0"></Setter>
+            <Setter Property="HorizontalOffset" Value="15"></Setter>
+            <Setter Property="VerticalOffset" Value="6"></Setter>
+            <Setter Property="HasDropShadow" Value="True"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="tb_style" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border x:Name="border"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="True"></Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background"
+                                        TargetName="border"
+                                        Value="{StaticResource tb_mouse_over}"></Setter>
+                                <Setter Property="BorderBrush"
+                                        TargetName="border"
+                                        Value="{StaticResource tb_mouse_over}"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background"
+                                        TargetName="border"
+                                        Value="{StaticResource tb_mouse_over}"></Setter>
+                                <Setter Property="BorderBrush"
+                                        TargetName="border"
+                                        Value="{StaticResource tb_mouse_over}"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="1435"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid x:Name="MainGrid" 
+              Background="Black"
+              Width="auto"
+              Grid.Column="1"
+              Grid.Row="0"
+              Grid.RowSpan="2">
+        </Grid>
+        <Grid
+              Grid.Column="0"
+              Grid.Row="0"
+              Grid.RowSpan="2"
+              Width="65"
+              x:Name="nav_pnl"
+              HorizontalAlignment="Left"
+               Background="#2E333A">
+            <Grid 
+                  >
+                <StackPanel x:Name="st_pnl">
+                    <Grid Height="90">
+                        <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               Margin="73,-20,0,0"
+                               Text="A U T O R E B A R"
+                               Foreground="White"
+                               FontSize="22"
+                               Background="Transparent"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource font_style}">
+                            <TextBlock.Effect>
+                                <DropShadowEffect BlurRadius="10"
+                                              ShadowDepth="1"
+                                              Direction="-90"
+                                              Color="Red"></DropShadowEffect>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                        <ToggleButton x:Name="Tg_btn"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Left"
+                                  Margin="18,-20,0,0"
+                                  Height="30"
+                                  Width="30"
+                                  BorderThickness="0"
+                                  Style="{StaticResource tb_style}">
+                            <ToggleButton.Background>
+                                <ImageBrush
+                                ImageSource="C:\Users\bachk\Documents\AUTOREBAR\Assets\tgBtn_default.png"
+                                Stretch="None"></ImageBrush>
+                            </ToggleButton.Background>
+                            <ToggleButton.Triggers>
+                                <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                                    <BeginStoryboard>
+                                        <Storyboard x:Name="HideStackPanel">
+                                            <DoubleAnimation 
+                                            Storyboard.TargetName="nav_pnl"
+                                            Storyboard.TargetProperty="Width"
+                                            BeginTime="0:0:0"
+                                            From="250" To="65"
+                                            Duration="0:0:0.2"></DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="ToggleButton.Checked">
+                                    <BeginStoryboard>
+                                        <Storyboard x:Name="ShowStackPanel">
+                                            <DoubleAnimation 
+                                            Storyboard.TargetName="nav_pnl"
+                                            Storyboard.TargetProperty="Width"
+                                            BeginTime="0:0:0"
+                                            From="65" To="250"
+                                            Duration="0:0:0.2"></DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </ToggleButton.Triggers>
+                        </ToggleButton>
+                    </Grid>
+                    <Button HorizontalAlignment="Left"
+                            Margin="0,15,0,15"
+                            Style="{StaticResource btn_style}"
+                            x:Name="Btn_ImportETABS"
+                            MouseMove="Btn_ImportETABS_MouseMove"
+                            Command="{Binding OpenEDB}"
+                            CommandParameter="{Binding ElementName=MainWindow}"
+                            >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="C:\Users\bachk\Documents\AUTOREBAR\Assets\ETABSIcon.png"
+                                   Margin="15,0,0,0"></Image>
+                            <TextBlock Text="Import ETABS"
+                                       Margin="25,0,0,0"
+                                       Width="185"
+                                       Style="{StaticResource font_style}"></TextBlock>
+                        </StackPanel>
+                        <Button.ToolTip>
+                            <ToolTip x:Name="tt_btnImportETABS"
+                                     Content="IMPORT ETABS"
+                                     Style="{StaticResource tt_style}"></ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                    <!--<Button HorizontalAlignment="Left"
+                            Margin="0,15,0,15"
+                            Style="{StaticResource btn_style}"
+                            x:Name="Btn_Material"
+                            MouseMove="Btn_Material_MouseMove"
+                            Click="Btn_Material_Click"
+                            >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="C:\Users\bachk\Documents\AUTOREBAR\Assets\Material.png"
+                                   Margin="15,0,0,0"></Image>
+                            <TextBlock Text="Material"
+                                       Margin="25,0,0,0"
+                                        Width="185"
+                                       Style="{StaticResource font_style}"></TextBlock>
+                        </StackPanel>
+                        <Button.ToolTip>
+                            <ToolTip x:Name="tt_btnMaterial"
+                                     Content="MATERIAL"
+                                     Style="{StaticResource tt_style}"></ToolTip>
+                        </Button.ToolTip>
+                    </Button>-->
+                    <Button HorizontalAlignment="Left"
+                            Margin="0,15,0,15"
+                            Style="{StaticResource btn_style}"
+                            x:Name="Btn_Beam"
+                            MouseMove="Btn_Beam_MouseMove"
+                            Click="Btn_Beam_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="C:\Users\bachk\Documents\AUTOREBAR\Assets\beam.png"
+                                   Margin="15,0,0,0"></Image>
+                            <TextBlock Text="Beam"
+                                       Margin="25,0,0,0"
+                                        Width="185"
+                                       Style="{StaticResource font_style}"></TextBlock>
+                        </StackPanel>
+                        <Button.ToolTip>
+                            <ToolTip x:Name="tt_btnBeam"
+                                     Content="BEAM"
+                                     Style="{StaticResource tt_style}"></ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button HorizontalAlignment="Left"
+                            Margin="0,15,0,15"
+                            Style="{StaticResource btn_style}"
+                            x:Name="Btn_Column"
+                            Click="Btn_Column_Click"
+                            MouseMove="Btn_Column_MouseMove">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="C:\Users\bachk\Documents\AUTOREBAR\Assets\Column.png"
+                                   Margin="15,0,0,0"></Image>
+                            <TextBlock Text="Column"
+                                       Margin="25,0,0,0"
+                                        Width="185"
+                                       Style="{StaticResource font_style}"></TextBlock>
+                        </StackPanel>
+                        <Button.ToolTip>
+                            <ToolTip x:Name="tt_btnColumn"
+                                     Content="COLUMN"
+                                     Style="{StaticResource tt_style}"></ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button HorizontalAlignment="Left"
+                            Margin="0,15,0,15"
+                            Style="{StaticResource btn_style}"
+                            x:Name="Btn_Slab"
+                            MouseMove="Btn_Slab_MouseMove">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="C:\Users\bachk\Documents\AUTOREBAR\Assets\Slab.png"
+                                   Margin="15,0,0,0"></Image>
+                            <TextBlock Text="Slab"
+                                       Margin="25,0,0,0"
+                                        Width="185"
+                                       Style="{StaticResource font_style}"></TextBlock>
+                        </StackPanel>
+                        <Button.ToolTip>
+                            <ToolTip x:Name="tt_btnSlab"
+                                     Content="SLAB"
+                                     Style="{StaticResource tt_style}"></ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Window>
